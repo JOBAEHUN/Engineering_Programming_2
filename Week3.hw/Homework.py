@@ -28,19 +28,6 @@ if num_b == "e":
 else:
     num_b = float(num_b)
     
-'''
-if num_a == "e":
-    num_a = math.e
-    num_a = round(float(num_a),3)
-elif num_b == "e":
-    num_b = math.e
-    num_b = round(float(num_b),3)   
-else:
-    num_a = float(num_a)
-    num_b = float(num_b)
-'''
-
-
 if oper == 1: 
         result = num_a + num_b
         print(f"## 계산기: {num_a} + {num_b} = {result}")
@@ -64,7 +51,7 @@ elif oper == 5:
 elif oper == 6:    
     result = num_a ** num_b
     print(f"## 계산기: {num_a} ^ {num_b} = {result}")
-    
+
 '''
 오류가 났을 때 다음 구문을 활용할 것
 print(num_a,num_b)
