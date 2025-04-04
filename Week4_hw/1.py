@@ -12,6 +12,7 @@ def func_open() :
     photo = PhotoImage(file = filename)
     pLabel.configure(image = photo)
     pLabel.image = photo
+    # 이미지 전체를 회색으로 변환 #
     for y in range(photo.height()):
         for x in range(photo.width()):
             r, g, b = photo.get(x, y)
@@ -23,7 +24,7 @@ def func_exit() :
 ## 메인코드부분##
 window = Tk()
 
-window.geometry("500x500")
+window.geometry("500x500") # 창 크기 설정
 window.title("명화감상하기")
 photo = PhotoImage()
 pLabel = Label(window, image = photo)

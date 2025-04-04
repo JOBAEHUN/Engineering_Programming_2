@@ -16,7 +16,7 @@ oper = int(input("번호 입력: "))
 num_a = input("첫번째 수 (x)를 입력하세요: ")
 num_b = input("두번째 수 (y)를 입력하세요: ")
 
-if num_a == "e":
+if num_a == "e": # 반드시 문자열로 받아야함
     num_a = math.e
     num_a = round(float(num_a),3)
 else:
@@ -27,30 +27,33 @@ if num_b == "e":
     num_b = round(float(num_b),3)
 else:
     num_b = float(num_b)
+
+display_a = "e" if num_a == round(math.e, 3) else num_a # e로 입력을 받을 때 변수 변환 
+display_b = "e" if num_b == round(math.e, 3) else num_b
     
 if oper == 1: 
         result = num_a + num_b
-        print(f"## 계산기: {num_a} + {num_b} = {result}")
+        print(f"## 계산기: {display_a} + {display_b} = {result}")
     
 elif oper == 2:
         result = num_a - num_b
-        print(f"## 계산기: {num_a} - {num_b} = {result}")
+        print(f"## 계산기: {display_a} - {display_b} = {result}")
 elif oper == 3:
         
         result = num_a * num_b
-        print(f"## 계산기: {num_a} * {num_b} = {result}")
+        print(f"## 계산기: {display_a} * {display_b} = {result}")
 elif oper == 4:
-    if num_b == 0:
+    if num_b == 0: # 0을로 나눌 때의 오류 메시지 뜨게
         print("오류: Division by zero")
     else: 
         result = round((num_a / num_b),3)
-        print(f"## 계산기: {num_a} / {num_b} = {result}")
+        print(f"## 계산기: {display_a} / {display_b} = {result}")
 elif oper == 5:
     result = math.log(num_a, num_b) 
-    print(f"## 계산기: log_{num_a}({num_b}) = {result}")
+    print(f"## 계산기: log_{display_a}({display_b}) = {result}")
 elif oper == 6:    
     result = num_a ** num_b
-    print(f"## 계산기: {num_a} ^ {num_b} = {result}")
+    print(f"## 계산기: {display_a} ^ {display_b} = {result}")
 
 '''
 오류가 났을 때 다음 구문을 활용할 것
