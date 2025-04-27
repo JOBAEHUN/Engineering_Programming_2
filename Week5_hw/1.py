@@ -1,9 +1,7 @@
 import os
-import tkinter as tk
-from tkinter import filedialog, ttk
-import matplotlib.pyplot as plt
+import csv
 
-# Linear fit function (with no rounding on R^2, limit to 5 digits without rounding)
+# Linear fit function (from 교수님 힌트)
 def linear_fit(x_vals, y_vals):
     n = len(x_vals)
     sum_x = sum(x_vals)
@@ -19,16 +17,19 @@ def linear_fit(x_vals, y_vals):
     ss_res = sum((y - (slope * x + intercept)) ** 2 for x, y in zip(x_vals, y_vals))
     r_squared = 1 - ss_res / ss_tot if ss_tot != 0 else 0
 
-    return slope, intercept, str(r_squared)[:str(r_squared).find('.') + 6]
+    return slope, intercept, r_squared
 
-# Main analysis function for a single CSV file
+# 분석 함수
 def analyze_csv(filepath):
     results = []
     with open(filepath, 'r', encoding='utf-8') as f:
         lines = f.readlines()
 
     header = lines[0].strip().split(',')
-    for outer_value in sorted(set(line.split(',')[2] for line in lines[1:])):
+
+    outer_values = sorted(set(line.split(',')[2] for line in lines[1:]))
+
+    for outer_value in outer_values:
         x_vals, y_vals = [], []
         for line in lines[1:]:
             parts = line.strip().split(',')
@@ -38,40 +39,35 @@ def analyze_csv(filepath):
 
         slope, intercept, r_squared = linear_fit(x_vals, y_vals)
         eq_str = f"V = {slope:.6f}*I + {intercept:.2e}"
-        result = [parts[0], parts[1], outer_value, f"{slope:.6f}", r_squared, eq_str]
-        results.append(result)
+
+        # 콘솔 출력
+        print(f"\nPattern: {parts[0]}, Inner: {parts[1]}μm, Outer: {outer_value}μm")
+        print(f"  ➤ Slope(R)       : {slope:.6f} (V/A)")
+        print(f"  ➤ Intercept      : {intercept:.2e}")
+        print(f"  ➤ R²             : {r_squared:.5f}")
+        print(f"  ➤ Fitting Eq.    : {eq_str}")
+
+        results.append([parts[0], parts[1], outer_value, f"{slope:.6f}", f"{r_squared:.5f}", eq_str])
+
     return results
 
-# GUI part
-def open_and_analyze():
-    filepaths = filedialog.askopenfilenames(filetypes=[("CSV files", "*.csv")])
-    all_results = []
-    for filepath in filepaths:
-        results = analyze_csv(filepath)
-        all_results.extend(results)
+# 메인
+def main():
+    filepath = input("CSV 파일 경로를 입력하세요: ").strip().strip('"')
+    if not os.path.exists(filepath):
+        print("파일이 존재하지 않습니다.")
+        return
 
-    for row in tree.get_children():
-        tree.delete(row)
-    for row in all_results:
-        tree.insert('', tk.END, values=row)
+    results = analyze_csv(filepath)
 
-    result_label.config(text=f"총 {len(filepaths)}개 파일 분석 완료.")
+    # CSV 저장
+    out_path = os.path.splitext(filepath)[0] + '_analysis.csv'
+    with open(out_path, 'w', newline='', encoding='utf-8') as f:
+        writer = csv.writer(f)
+        writer.writerow(["Pattern", "Inner Circle (um)", "Outer Circle (um)", "Slope (V/A)", "R²", "Equation"])
+        writer.writerows(results)
 
-root = tk.Tk()
-root.title("TLM IV 분석 워크시트")
-root.geometry("800x400")
+    print(f"\n분석 결과가 {out_path} 에 저장되었습니다.")
 
-btn = tk.Button(root, text="CSV 파일 선택 및 분석", command=open_and_analyze)
-btn.pack(pady=10)
-
-result_label = tk.Label(root, text="분석 결과가 여기에 표시됩니다.", fg="blue")
-result_label.pack()
-
-cols = ["Pattern", "Inner Circle (um)", "Outer Circle (um)", "Slope (V/A)", "R²", "Equation"]
-tree = ttk.Treeview(root, columns=cols, show='headings')
-for col in cols:
-    tree.heading(col, text=col)
-    tree.column(col, width=130, anchor="center")
-tree.pack(expand=True, fill='both')
-
-root.mainloop()
+if __name__ == "__main__":
+    main()

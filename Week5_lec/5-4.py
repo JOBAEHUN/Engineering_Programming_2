@@ -5,9 +5,9 @@ Created on Mon Mar 31 09:32:00 2025
 """
 
 # 기존 CSV 파일 경로
-input_file_path = "C:/Temp/LED_wafer_Processing_summary.csv"
+input_file_path = "E:/MyPythonProject/Week5_lec/LED_wafer_Processing_summary.csv"
 # 새로운 CSV 파일 경로
-output_file_path = "C:/Temp/new_LED_wafer_Processing_summary.csv"
+output_file_path = "E:/MyPythonProject/Week5_lec/new_LED_wafer_Processing_summary.csv"
 
 with open(input_file_path, "r") as inFp:
     with open(output_file_path, "w") as outFp:

@@ -9,7 +9,7 @@ def printList(pList):
         print(data, end='\t')
     print()
     
-with open("C:/Temp/LED_wafer_Processing_summary.csv","r") as inFp:
+with open("E:/MyPythonProject/Week5_lec/LED_wafer_Processing_summary.csv","r") as inFp:
     header = inFp.readline()
     header = header.strip()
     header_list = header.split(',')
