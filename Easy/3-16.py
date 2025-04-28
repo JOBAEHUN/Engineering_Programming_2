@@ -13,7 +13,6 @@ print("** 로또 추첨을 시작합니다. ** \n");
 
 while True:
     num = getNumber()
-    
     if lotto.count(num) == 0:
         lotto.append(num)
     if len(lotto) >= 6:

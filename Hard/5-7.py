@@ -1,6 +1,6 @@
 import csv
 
-with open("E:/MyPythonProject/Week5_lec/singer2.csv", "r") as inFp :
+with open("E:/MyPythonProject/Easy/singer2.csv", "r") as inFp :
      csvReader = csv.reader(inFp)
      header_list = next(csvReader)
      print(header_list[1],header_list[6])
