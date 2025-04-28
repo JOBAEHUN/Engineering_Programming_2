@@ -2,7 +2,7 @@
 import openpyxl
 
 # 엑셀 파일 불러오기
-file_path = 'character.xlsx' # 파일이 있는 경로 또는 같은 폴더에 있을 경우
+file_path = 'character.xlsx'  # 파일이 있는 경로 또는 같은 폴더에 있을 경우
 wb = openpyxl.load_workbook(file_path)
 print(wb.sheetnames)
 sheet1 = wb['Sheet1']

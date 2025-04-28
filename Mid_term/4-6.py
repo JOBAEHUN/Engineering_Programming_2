@@ -8,7 +8,7 @@ def myFunc():
 ## 메인 코드 부분 ##
 window = Tk()
 
-photo = PhotoImage(file = "dog10.gif")
+photo = PhotoImage(file ="dog10.gif")
 button1 = Button(window, image = photo, command = myFunc)
 
 button1.pack()
